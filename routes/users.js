@@ -162,15 +162,21 @@ app.post('/signup', (req, res) => {
                             })
                             user
                                 .save()
-                                .then(() => {
-                                    //SEND TOKEN
-                                    jwt.sign({user}, key, {expiresIn: '30d'}, (err, token) => {
-                                        res.json({
-                                            status: true,
-                                            msg: 'User created',
-                                            token
+                                .then((user) => {
+                                    //CREATE WELCOME NOTIFICATION
+                                    const notification = new Notification({ user_id: user._id, time: Date.now(), msg: 'Welcome to Redos Transfers! We transfered you 500 credits as a gift.' })
+                                    notification
+                                        .save()
+                                        .then(() => {
+                                            //SEND TOKEN
+                                            jwt.sign({user}, key, {expiresIn: '30d'}, (err, token) => {
+                                                res.json({
+                                                    status: true,
+                                                    msg: 'User created',
+                                                    token
+                                                })
+                                            });
                                         })
-                                    });
                                 })
                         })
                         .catch(() => res.json({
