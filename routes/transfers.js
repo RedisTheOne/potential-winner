@@ -45,7 +45,7 @@ app.post('/send', (req, res) => {
                                                     //SAVE THE FIRST
                                                     notificationOne
                                                         .save()
-                                                        .then(() => {
+                                                        .then((notification) => {
                                                             //SAVE THE SECOND
                                                             notificationTwo
                                                                 .save()
@@ -53,7 +53,8 @@ app.post('/send', (req, res) => {
                                                                     //FINALLY DONE :)
                                                                     res.json({
                                                                         status: true,
-                                                                        msg: 'Transfer was done successfuly'
+                                                                        msg: 'Transfer was done successfuly',
+                                                                        notification
                                                                     })
                                                                 })
                                                         })
